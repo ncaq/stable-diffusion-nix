@@ -31,8 +31,12 @@ NVIDIAのGPUを使用していること。
 nix run
 ```
 
-## ディレクトリ構造
+## ディレクトリ
 
-- `extensions/` - ユーザー拡張機能
+`$XDG_DATA_HOME`ディレクトリまたは設定されていない場合は`~/.local/share/`ディレクトリに、
+`stable-diffusion-webui`ディレクトリを作成します。
+
+以下のようなデータを読み書きするためにディレクトリが使われます。
+
 - `models/` - モデルファイル
 - `outputs/` - 生成された画像

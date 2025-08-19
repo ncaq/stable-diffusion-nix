@@ -275,6 +275,10 @@
               mkdir -p $out/bin
               cat > $out/bin/stable-diffusion-webui << EOF
               #!/usr/bin/env bash
+              # Use XDG Base Directory specification
+              DATA_DIR="\''${XDG_DATA_HOME:-\$HOME/.local/share}/stable-diffusion-webui"
+              # Create base directory
+              mkdir -p "\$DATA_DIR"
               cd $out/share/stable-diffusion-webui
               export PYTHONPATH=$out/share/stable-diffusion-webui:$out/share/stable-diffusion-webui/modules
               export GRADIO_ANALYTICS_ENABLED=False
@@ -282,6 +286,7 @@
                 --skip-python-version-check \
                 --skip-install \
                 --skip-torch-cuda-test \
+                --data-dir "\$DATA_DIR" \
                 "\$@"
               EOF
               chmod +x $out/bin/stable-diffusion-webui
