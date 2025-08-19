@@ -33,12 +33,8 @@ nix run
 
 ## ディレクトリ構造
 
-初回起動時に以下のディレクトリが自動作成されます:
+初回起動時に以下のディレクトリがリポジトリ以下に生成されます。
 
-- `~/.local/share/stable-diffusion-webui/` - 作業ディレクトリ
-    - `extensions/` - ユーザー拡張機能
-    - `models/` - モデルファイル
-        - Stable Diffusionモデル: `~/.local/share/stable-diffusion-webui/models/Stable-diffusion/`
-        - LoRA: `~/.local/share/stable-diffusion-webui/models/Lora/`
-        - VAE: `~/.local/share/stable-diffusion-webui/models/VAE/`
-    - `outputs/` - 生成された画像
+- `extensions/` - ユーザー拡張機能
+- `models/` - モデルファイル
+- `outputs/` - 生成された画像
