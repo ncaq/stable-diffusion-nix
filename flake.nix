@@ -9,7 +9,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     stable-diffusion-webui = {
-      url = "github:AUTOMATIC1111/stable-diffusion-webui";
+      url = "github:AUTOMATIC1111/stable-diffusion-webui/dev";
       flake = false;
     };
   };

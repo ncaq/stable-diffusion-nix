@@ -60,15 +60,16 @@
     "stable-diffusion-webui": {
       "flake": false,
       "locked": {
-        "lastModified": 1722084579,
-        "narHash": "sha256-lY+fZQ9yzFBVX5hrmvaIAm/FaRnsIkB2z4WpcJMmL3w=",
+        "lastModified": 1746253023,
+        "narHash": "sha256-tebOUV47lUFxE3ZQ6OHrKj2EFo+42swsbA7miIl8xzo=",
         "owner": "AUTOMATIC1111",
         "repo": "stable-diffusion-webui",
-        "rev": "82a973c04367123ae98bd9abdf80d9eda9b910e2",
+        "rev": "2174ce5afea90ca489d222f539988dcef59f1027",
         "type": "github"
       },
       "original": {
         "owner": "AUTOMATIC1111",
+        "ref": "dev",
         "repo": "stable-diffusion-webui",
         "type": "github"
       }
