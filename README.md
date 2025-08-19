@@ -14,9 +14,31 @@
 
 ## 前提
 
-NixパッケージマネージャをFlakesとCommandを有効にしてインストールしていること。
+Nixパッケージマネージャが使えること。
+
+Nix FlakesとNix Commandが有効化されていること。
 
 NVIDIAのGPUを使用していること。
 ここは将来的にAMDやIntelのGPUやCPUでの実行も可能にしても良いですが、
-今私が画像生成を実用的に動かせる環境はNVIDIAのGPUのみなので、
-今のところは後回しにします。
+私が手元で画像生成を実用的に動かせる環境はNVIDIAのGPUのみなので、
+今のところは後回しにしています。
+
+## 使い方
+
+### 起動
+
+```bash
+nix run
+```
+
+## ディレクトリ構造
+
+初回起動時に以下のディレクトリが自動作成されます:
+
+- `~/.local/share/stable-diffusion-webui/` - 作業ディレクトリ
+    - `extensions/` - ユーザー拡張機能
+    - `models/` - モデルファイル
+        - Stable Diffusionモデル: `~/.local/share/stable-diffusion-webui/models/Stable-diffusion/`
+        - LoRA: `~/.local/share/stable-diffusion-webui/models/Lora/`
+        - VAE: `~/.local/share/stable-diffusion-webui/models/VAE/`
+    - `outputs/` - 生成された画像
