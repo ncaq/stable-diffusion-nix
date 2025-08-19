@@ -53,6 +53,14 @@
           pythonOverlay = _final: prev: {
             python313 = prev.python313.override {
               packageOverrides = pyFinal: _pyPrev: {
+                # Override torch to use CUDA
+                torch = _pyPrev.torch.override {
+                  cudaSupport = true;
+                  cudaPackages = prev.cudaPackages;
+                };
+                torchvision = _pyPrev.torchvision.override {
+                  torch = pyFinal.torch;
+                };
                 blendmodes = pyFinal.buildPythonPackage rec {
                   pname = "blendmodes";
                   version = "2022";
