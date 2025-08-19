@@ -60,7 +60,31 @@
                     inherit pname version;
                     sha256 = "sha256-k2jxwekOhzS0lo8MrANpbg5acU/VfnS8bu/SXAQY/QM=";
                   };
-                  propagatedBuildInputs = with pyFinal; [ numpy ];
+                  propagatedBuildInputs = with pyFinal; [
+                    numpy
+                    aenum
+                  ];
+                  doCheck = false; # No tests
+                };
+
+                clip = pyFinal.buildPythonPackage {
+                  pname = "clip";
+                  version = "1.0";
+                  src = prev.fetchFromGitHub {
+                    owner = "openai";
+                    repo = "CLIP";
+                    rev = "a1d071733d7111c9c014f024669f959182114e33";
+                    sha256 = "sha256-NOiKadc5DYvE94NEHPvlUn4e8lvW2k0NkyEACAxekGQ=";
+                  };
+                  propagatedBuildInputs = with pyFinal; [
+                    torch
+                    torchvision
+                    numpy
+                    pillow
+                    ftfy
+                    regex
+                    tqdm
+                  ];
                   doCheck = false; # No tests
                 };
 
@@ -172,6 +196,7 @@
               accelerate
               blendmodes
               clean-fid
+              clip
               diskcache
               einops
               facexlib
@@ -262,6 +287,13 @@
 
               # Add the patch import at the top of ui_components.py
               sed -i '1a import gradio_patch' modules/ui_components.py
+
+              # Fix Gradio IOComponent compatibility issue
+              sed -i 's/gr.components.IOComponent/gr.components.Component/g' modules/gradio_extensons.py
+              sed -i 's/gradio.components.IOComponent/gradio.components.Component/g' modules/ui_tempdir.py
+
+              # Fix Gradio deprecation warning issue
+              sed -i '/warnings.filterwarnings.*gr.deprecation.GradioDeprecationWarning/d' modules/ui.py
 
               # Fix pytorch_lightning import issue
               sed -i 's/from pytorch_lightning.utilities.distributed/from pytorch_lightning.utilities.rank_zero/' repositories/stable-diffusion-stability-ai/ldm/models/diffusion/ddpm.py
