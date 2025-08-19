@@ -1,16 +1,16 @@
 {
-  description = "stable-diffusion to managed by Nix";
+  description = "Stable Diffusion WebUI managed by Nix";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
-    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-
     flake-parts.url = "github:hercules-ci/flake-parts";
-    flake-utils.url = "github:numtide/flake-utils";
-
     treefmt-nix = {
       url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+    stable-diffusion-webui = {
+      url = "github:AUTOMATIC1111/stable-diffusion-webui";
+      flake = false;
     };
   };
 
