@@ -51,16 +51,12 @@
         let
           # Python package overlay for custom packages
           pythonOverlay = _final: prev: {
-            python313 = prev.python313.override {
-              packageOverrides = pyFinal: _pyPrev: {
-                # Override torch to use CUDA
-                torch = _pyPrev.torch.override {
-                  cudaSupport = true;
-                  cudaPackages = prev.cudaPackages;
-                };
-                torchvision = _pyPrev.torchvision.override {
-                  torch = pyFinal.torch;
-                };
+            python312 = prev.python312.override {
+              packageOverrides = pyFinal: pyPrev: {
+                # Use prebuilt CUDA-enabled torch packages
+                torch = pyPrev.torch-bin;
+                torchvision = pyPrev.torchvision-bin;
+
                 blendmodes = pyFinal.buildPythonPackage rec {
                   pname = "blendmodes";
                   version = "2022";
@@ -194,12 +190,15 @@
           # Apply overlay
           pkgs' = import inputs.nixpkgs {
             inherit system;
-            config.allowUnfree = true;
+            config = {
+              allowUnfree = true;
+              cudaSupport = true;
+            };
             overlays = [ pythonOverlay ];
           };
 
           # Python environment with all dependencies
-          pythonEnv = pkgs'.python313.withPackages (
+          pythonEnv = pkgs'.python312.withPackages (
             ps: with ps; [
               accelerate
               blendmodes
