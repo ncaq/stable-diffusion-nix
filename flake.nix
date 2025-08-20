@@ -250,7 +250,7 @@
             };
           };
 
-          pkgs' = import inputs.nixpkgs {
+          pkgs = import inputs.nixpkgs {
             inherit system;
             config = {
               allowUnfree = true;
@@ -259,7 +259,7 @@
             overlays = [ pythonOverlay ];
           };
 
-          pythonEnv = pkgs'.python312.withPackages (
+          pythonEnv = pkgs.python312.withPackages (
             ps: with ps; [
               accelerate
               blendmodes
@@ -299,39 +299,39 @@
             ]
           );
 
-          stable-diffusion-stability-ai = pkgs'.fetchFromGitHub {
+          stable-diffusion-stability-ai = pkgs.fetchFromGitHub {
             owner = "Stability-AI";
             repo = "stablediffusion";
             rev = "cf1d67a6fd5ea1aa600c4df58e5b47da45f6bdbf";
             sha256 = "sha256-yEtrz/JTq53JDI4NZI26KsD8LAgiViwiNaB2i1CBs/I=";
           };
 
-          stable-diffusion-webui-assets = pkgs'.fetchFromGitHub {
+          stable-diffusion-webui-assets = pkgs.fetchFromGitHub {
             owner = "AUTOMATIC1111";
             repo = "stable-diffusion-webui-assets";
             rev = "6f7db241d2f8ba7457bac5ca9753331f0c266917";
             sha256 = "sha256-gos24/VHz+Es834ZfMVdu3L9m04CR0cLi54bgTlWLJk=";
           };
 
-          generative-models = pkgs'.fetchFromGitHub {
+          generative-models = pkgs.fetchFromGitHub {
             owner = "Stability-AI";
             repo = "generative-models";
             rev = "45c443b316737a4ab6e40413d7794a7f5657c19f";
             sha256 = "sha256-qaZeaCfOO4vWFZZAyqNpJbTttJy17GQ5+DM05yTLktA=";
           };
 
-          k-diffusion = pkgs'.fetchFromGitHub {
+          k-diffusion = pkgs.fetchFromGitHub {
             owner = "crowsonkb";
             repo = "k-diffusion";
             rev = "ab527a9a6d347f364e3d185ba6d714e22d80cb3c";
             sha256 = "sha256-tOWDFt0/hGZF5HENiHPb9a2pBlXdSvDvCNTsCMZljC4=";
           };
 
-          stable-diffusion-webui = pkgs'.stdenv.mkDerivation {
+          stable-diffusion-webui = pkgs.stdenv.mkDerivation {
             pname = "stable-diffusion-webui";
             version = "unstable-2024-07-25";
             src = inputs.stable-diffusion-webui;
-            buildInputs = with pkgs'; [
+            buildInputs = with pkgs; [
               cudaPackages.cudatoolkit
               cudaPackages.cudnn
               git
@@ -389,7 +389,7 @@
             };
           };
           packages.default = stable-diffusion-webui;
-          devShells.default = pkgs'.mkShell {
+          devShells.default = pkgs.mkShell {
             buildInputs = [ pythonEnv ];
           };
         };
