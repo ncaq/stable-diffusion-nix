@@ -36,7 +36,7 @@
           # Python package overlay for custom packages
           pythonOverlay = _final: prev: {
             python312 = prev.python312.override {
-              packageOverrides = pyFinal: pyPrev: {
+              packageOverrides = pyFinal: _pyPrev: {
                 blendmodes = pyFinal.buildPythonPackage rec {
                   pname = "blendmodes";
                   version = "2022";
