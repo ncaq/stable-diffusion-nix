@@ -18,40 +18,6 @@
         "type": "github"
       }
     },
-    "generative-models": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1690395263,
-        "narHash": "sha256-qaZeaCfOO4vWFZZAyqNpJbTttJy17GQ5+DM05yTLktA=",
-        "owner": "Stability-AI",
-        "repo": "generative-models",
-        "rev": "45c443b316737a4ab6e40413d7794a7f5657c19f",
-        "type": "github"
-      },
-      "original": {
-        "owner": "Stability-AI",
-        "repo": "generative-models",
-        "rev": "45c443b316737a4ab6e40413d7794a7f5657c19f",
-        "type": "github"
-      }
-    },
-    "k-diffusion": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1691866834,
-        "narHash": "sha256-tOWDFt0/hGZF5HENiHPb9a2pBlXdSvDvCNTsCMZljC4=",
-        "owner": "crowsonkb",
-        "repo": "k-diffusion",
-        "rev": "ab527a9a6d347f364e3d185ba6d714e22d80cb3c",
-        "type": "github"
-      },
-      "original": {
-        "owner": "crowsonkb",
-        "repo": "k-diffusion",
-        "rev": "ab527a9a6d347f364e3d185ba6d714e22d80cb3c",
-        "type": "github"
-      }
-    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1755471983,
@@ -86,30 +52,9 @@
     "root": {
       "inputs": {
         "flake-parts": "flake-parts",
-        "generative-models": "generative-models",
-        "k-diffusion": "k-diffusion",
         "nixpkgs": "nixpkgs",
-        "stable-diffusion-stability-ai": "stable-diffusion-stability-ai",
         "stable-diffusion-webui": "stable-diffusion-webui",
-        "stable-diffusion-webui-assets": "stable-diffusion-webui-assets",
         "treefmt-nix": "treefmt-nix"
-      }
-    },
-    "stable-diffusion-stability-ai": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1679711060,
-        "narHash": "sha256-yEtrz/JTq53JDI4NZI26KsD8LAgiViwiNaB2i1CBs/I=",
-        "owner": "Stability-AI",
-        "repo": "stablediffusion",
-        "rev": "cf1d67a6fd5ea1aa600c4df58e5b47da45f6bdbf",
-        "type": "github"
-      },
-      "original": {
-        "owner": "Stability-AI",
-        "repo": "stablediffusion",
-        "rev": "cf1d67a6fd5ea1aa600c4df58e5b47da45f6bdbf",
-        "type": "github"
       }
     },
     "stable-diffusion-webui": {
@@ -126,23 +71,6 @@
         "owner": "AUTOMATIC1111",
         "ref": "dev",
         "repo": "stable-diffusion-webui",
-        "type": "github"
-      }
-    },
-    "stable-diffusion-webui-assets": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1704608154,
-        "narHash": "sha256-gos24/VHz+Es834ZfMVdu3L9m04CR0cLi54bgTlWLJk=",
-        "owner": "AUTOMATIC1111",
-        "repo": "stable-diffusion-webui-assets",
-        "rev": "6f7db241d2f8ba7457bac5ca9753331f0c266917",
-        "type": "github"
-      },
-      "original": {
-        "owner": "AUTOMATIC1111",
-        "repo": "stable-diffusion-webui-assets",
-        "rev": "6f7db241d2f8ba7457bac5ca9753331f0c266917",
         "type": "github"
       }
     },

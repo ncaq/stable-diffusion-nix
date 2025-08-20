@@ -12,22 +12,6 @@
       url = "github:AUTOMATIC1111/stable-diffusion-webui/dev";
       flake = false;
     };
-    stable-diffusion-stability-ai = {
-      url = "github:Stability-AI/stablediffusion/cf1d67a6fd5ea1aa600c4df58e5b47da45f6bdbf";
-      flake = false;
-    };
-    stable-diffusion-webui-assets = {
-      url = "github:AUTOMATIC1111/stable-diffusion-webui-assets/6f7db241d2f8ba7457bac5ca9753331f0c266917";
-      flake = false;
-    };
-    generative-models = {
-      url = "github:Stability-AI/generative-models/45c443b316737a4ab6e40413d7794a7f5657c19f";
-      flake = false;
-    };
-    k-diffusion = {
-      url = "github:crowsonkb/k-diffusion/ab527a9a6d347f364e3d185ba6d714e22d80cb3c";
-      flake = false;
-    };
   };
 
   outputs =
@@ -328,6 +312,34 @@
             ]
           );
 
+          stable-diffusion-stability-ai = pkgs'.fetchFromGitHub {
+            owner = "Stability-AI";
+            repo = "stablediffusion";
+            rev = "cf1d67a6fd5ea1aa600c4df58e5b47da45f6bdbf";
+            sha256 = "sha256-yEtrz/JTq53JDI4NZI26KsD8LAgiViwiNaB2i1CBs/I=";
+          };
+
+          stable-diffusion-webui-assets = pkgs'.fetchFromGitHub {
+            owner = "AUTOMATIC1111";
+            repo = "stable-diffusion-webui-assets";
+            rev = "6f7db241d2f8ba7457bac5ca9753331f0c266917";
+            sha256 = "sha256-gos24/VHz+Es834ZfMVdu3L9m04CR0cLi54bgTlWLJk=";
+          };
+
+          generative-models = pkgs'.fetchFromGitHub {
+            owner = "Stability-AI";
+            repo = "generative-models";
+            rev = "45c443b316737a4ab6e40413d7794a7f5657c19f";
+            sha256 = "sha256-qaZeaCfOO4vWFZZAyqNpJbTttJy17GQ5+DM05yTLktA=";
+          };
+
+          k-diffusion = pkgs'.fetchFromGitHub {
+            owner = "crowsonkb";
+            repo = "k-diffusion";
+            rev = "ab527a9a6d347f364e3d185ba6d714e22d80cb3c";
+            sha256 = "sha256-tOWDFt0/hGZF5HENiHPb9a2pBlXdSvDvCNTsCMZljC4=";
+          };
+
           stable-diffusion-webui = pkgs'.stdenv.mkDerivation {
             pname = "stable-diffusion-webui";
             version = "unstable-2024-07-25";
@@ -344,10 +356,10 @@
               cd $TMPDIR/webui
               # Copy repositories and make them writable
               mkdir -p repositories
-              cp -r ${inputs.generative-models} repositories/generative-models
-              cp -r ${inputs.k-diffusion} repositories/k-diffusion
-              cp -r ${inputs.stable-diffusion-stability-ai} repositories/stable-diffusion-stability-ai
-              cp -r ${inputs.stable-diffusion-webui-assets} repositories/stable-diffusion-webui-assets
+              cp -r ${generative-models} repositories/generative-models
+              cp -r ${k-diffusion} repositories/k-diffusion
+              cp -r ${stable-diffusion-stability-ai} repositories/stable-diffusion-stability-ai
+              cp -r ${stable-diffusion-webui-assets} repositories/stable-diffusion-webui-assets
               chmod -R u+w repositories
               # Fix pytorch_lightning import issue
               sed -i 's/from pytorch_lightning.utilities.distributed/from pytorch_lightning.utilities.rank_zero/' repositories/stable-diffusion-stability-ai/ldm/models/diffusion/ddpm.py
