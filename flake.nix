@@ -47,7 +47,6 @@
                     numpy
                     aenum
                   ];
-                  doCheck = false; # No tests
                 };
 
                 clip = pyFinal.buildPythonPackage {
@@ -68,7 +67,6 @@
                     regex
                     tqdm
                   ];
-                  doCheck = false; # No tests
                 };
 
                 facexlib = pyFinal.buildPythonPackage rec {
@@ -96,7 +94,6 @@
                     scipy
                     filterpy
                   ];
-                  doCheck = false; # Tests require model downloads
                 };
 
                 # Override Gradio to use version 3.41.2 that stable-diffusion-webui expects
@@ -148,7 +145,6 @@
                     uvicorn
                     websockets
                   ];
-                  doCheck = false;
                 };
 
                 # gradio-client for Gradio 3.41.2
@@ -174,7 +170,6 @@
                     typing-extensions
                     websockets
                   ];
-                  doCheck = false;
                 };
 
                 pillow-avif-plugin = pyFinal.buildPythonPackage rec {
@@ -187,7 +182,6 @@
                   };
                   propagatedBuildInputs = with pyFinal; [ pillow ];
                   buildInputs = with prev; [ libavif ];
-                  doCheck = false; # Tests require specific image files
                 };
 
                 spandrel = pyFinal.buildPythonPackage rec {
@@ -209,7 +203,6 @@
                     numpy
                     einops
                   ];
-                  doCheck = false; # Tests require model downloads
                 };
 
                 spandrel-extra-arches = pyFinal.buildPythonPackage rec {
@@ -227,7 +220,6 @@
                   propagatedBuildInputs = with pyFinal; [
                     spandrel
                   ];
-                  doCheck = false; # No tests
                 };
 
                 tomesd = pyFinal.buildPythonPackage rec {
@@ -238,7 +230,6 @@
                     sha256 = "sha256-Fbui6VL0ZDyDVZUeiS/akY3cy9/yI43DaNQr0Hj87ck=";
                   };
                   propagatedBuildInputs = with pyFinal; [ torch ];
-                  doCheck = false; # No tests
                 };
 
                 # Override websockets to version 11.x for compatibility with gradio-client 0.5.0
@@ -254,7 +245,6 @@
                     setuptools
                     wheel
                   ];
-                  doCheck = false;
                 };
               };
             };
