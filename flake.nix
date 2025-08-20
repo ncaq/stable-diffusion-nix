@@ -116,6 +116,84 @@
                   doCheck = false; # Tests require model downloads
                 };
 
+                # Override Gradio to use version 3.41.2 that stable-diffusion-webui expects
+                gradio = pyFinal.buildPythonPackage rec {
+                  pname = "gradio";
+                  version = "3.41.2";
+                  format = "pyproject";
+                  src = pyFinal.fetchPypi {
+                    inherit pname version;
+                    sha256 = "sha256-lcYrUEGVq+M2PQFRZ86Eis3he3W4lKeaLeeMz8/YLLI=";
+                  };
+                  nativeBuildInputs = with pyFinal; [
+                    hatchling
+                    hatch-requirements-txt
+                    hatch-fancy-pypi-readme
+                    pythonRelaxDepsHook
+                  ];
+                  pythonRelaxDeps = [
+                    "aiofiles"
+                    "markupsafe"
+                    "numpy"
+                    "pillow"
+                  ];
+                  propagatedBuildInputs = with pyFinal; [
+                    importlib-resources
+                    aiofiles
+                    altair
+                    fastapi
+                    ffmpy
+                    gradio-client
+                    httpx
+                    huggingface-hub
+                    jinja2
+                    markdown-it-py
+                    markupsafe
+                    matplotlib
+                    numpy
+                    orjson
+                    packaging
+                    pandas
+                    pillow
+                    pydantic
+                    pydub
+                    python-multipart
+                    pyyaml
+                    requests
+                    semantic-version
+                    typing-extensions
+                    uvicorn
+                    websockets
+                  ];
+                  doCheck = false;
+                };
+
+                # gradio-client for Gradio 3.41.2
+                gradio-client = pyFinal.buildPythonPackage rec {
+                  pname = "gradio-client";
+                  version = "0.5.0";
+                  format = "pyproject";
+                  src = pyFinal.fetchPypi {
+                    pname = "gradio_client";
+                    inherit version;
+                    sha256 = "sha256-cJ6RweBzir5GrZ9FZdSQ7zaw8XzjRwUAF6+qRp7Xmmo=";
+                  };
+                  nativeBuildInputs = with pyFinal; [
+                    hatchling
+                    hatch-requirements-txt
+                    hatch-fancy-pypi-readme
+                  ];
+                  propagatedBuildInputs = with pyFinal; [
+                    httpx
+                    huggingface-hub
+                    packaging
+                    requests
+                    typing-extensions
+                    websockets
+                  ];
+                  doCheck = false;
+                };
+
                 pillow-avif-plugin = pyFinal.buildPythonPackage rec {
                   pname = "pillow-avif-plugin";
                   version = "1.5.2";
@@ -178,6 +256,22 @@
                   };
                   propagatedBuildInputs = with pyFinal; [ torch ];
                   doCheck = false; # No tests
+                };
+
+                # Override websockets to version 11.x for compatibility with gradio-client 0.5.0
+                websockets = pyFinal.buildPythonPackage rec {
+                  pname = "websockets";
+                  version = "11.0.3";
+                  format = "pyproject";
+                  src = pyFinal.fetchPypi {
+                    inherit pname version;
+                    sha256 = "sha256-iPxR2aJrEPwzG+NE8XgSJKN1t4SI/DQ2IBhOlaSycBY=";
+                  };
+                  nativeBuildInputs = with pyFinal; [
+                    setuptools
+                    wheel
+                  ];
+                  doCheck = false;
                 };
               };
             };
@@ -255,52 +349,8 @@
               cp -r ${inputs.stable-diffusion-stability-ai} repositories/stable-diffusion-stability-ai
               cp -r ${inputs.stable-diffusion-webui-assets} repositories/stable-diffusion-webui-assets
               chmod -R u+w repositories
-
-              # Patch Gradio to disable runtime pyi generation
-              cat > gradio_pyi_patch.py << 'PYTHON_EOF'
-              import sys
-              import importlib.util
-              # Load the original gradio module
-              spec = importlib.util.find_spec("gradio.component_meta")
-              module = importlib.util.module_from_spec(spec)
-
-              # Replace create_or_modify_pyi with a no-op
-              def create_or_modify_pyi(*args, **kwargs):
-                  pass
-
-              module.create_or_modify_pyi = create_or_modify_pyi
-              sys.modules["gradio.component_meta"] = module
-              spec.loader.exec_module(module)
-              PYTHON_EOF
-
-              # Create a simple monkey patch for Gradio
-              cat > modules/gradio_patch.py << 'PYTHON_EOF'
-              import sys
-
-              # Monkey patch Gradio's create_or_modify_pyi before it's used
-              def patch_gradio():
-                  try:
-                      import gradio.component_meta as cm
-                      cm.create_or_modify_pyi = lambda *args, **kwargs: None
-                  except:
-                      pass
-
-              patch_gradio()
-              PYTHON_EOF
-
-              # Add the patch import at the top of ui_components.py
-              sed -i '1a import gradio_patch' modules/ui_components.py
-
-              # Fix Gradio IOComponent compatibility issue
-              sed -i 's/gr.components.IOComponent/gr.components.Component/g' modules/gradio_extensons.py
-              sed -i 's/gradio.components.IOComponent/gradio.components.Component/g' modules/ui_tempdir.py
-
-              # Fix Gradio deprecation warning issue
-              sed -i '/warnings.filterwarnings.*gr.deprecation.GradioDeprecationWarning/d' modules/ui.py
-
               # Fix pytorch_lightning import issue
               sed -i 's/from pytorch_lightning.utilities.distributed/from pytorch_lightning.utilities.rank_zero/' repositories/stable-diffusion-stability-ai/ldm/models/diffusion/ddpm.py
-
               cd -
             '';
             installPhase = ''
