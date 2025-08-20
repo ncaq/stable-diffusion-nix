@@ -33,7 +33,6 @@
           ...
         }:
         let
-          # Python package overlay for custom packages
           pythonOverlay = _final: prev: {
             python312 = prev.python312.override {
               packageOverrides = pyFinal: _pyPrev: {
@@ -261,7 +260,6 @@
             };
           };
 
-          # Apply overlay
           pkgs' = import inputs.nixpkgs {
             inherit system;
             config = {
@@ -271,7 +269,6 @@
             overlays = [ pythonOverlay ];
           };
 
-          # Python environment with all dependencies
           pythonEnv = pkgs'.python312.withPackages (
             ps: with ps; [
               accelerate
