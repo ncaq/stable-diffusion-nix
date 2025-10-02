@@ -1,0 +1,13 @@
+--- modules/api/models.py
++++ modules/api/models.py
+@@ -93,8 +93,8 @@
+             d.field: (d.field_type, Field(default=d.field_value, alias=d.field_alias, exclude=d.field_exclude)) for d in self._model_def
+         }
+         DynamicModel = create_model(self._model_name, **fields)
+-        DynamicModel.__config__.allow_population_by_field_name = True
+-        DynamicModel.__config__.allow_mutation = True
++        DynamicModel.model_config = {"populate_by_name": True, "arbitrary_types_allowed": True}
++        # DynamicModel.__config__.allow_mutation = True  # Not needed in Pydantic v2
+         return DynamicModel
+
+ StableDiffusionTxt2ImgProcessingAPI = PydanticModelGenerator(
