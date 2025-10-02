@@ -350,6 +350,11 @@
               chmod -R u+w repositories
               # Fix pytorch_lightning import issue
               sed -i 's/from pytorch_lightning.utilities.distributed/from pytorch_lightning.utilities.rank_zero/' repositories/stable-diffusion-stability-ai/ldm/models/diffusion/ddpm.py
+              # Fix Pydantic v2 compatibility issues
+              sed -i 's/DynamicModel\.__config__\.allow_population_by_field_name = True/DynamicModel.model_config = {"populate_by_name": True, "arbitrary_types_allowed": True}/' modules/api/models.py
+              sed -i 's/DynamicModel\.__config__\.allow_mutation = True/# DynamicModel.__config__.allow_mutation = True/' modules/api/models.py
+              # Fix config_states directory issue - use data_dir instead of installation dir
+              sed -i 's|config_states_dir = os.path.join(script_path, "config_states")|config_states_dir = os.path.join(data_path, "config_states")|' modules/paths_internal.py
               cd -
             '';
             installPhase = ''
