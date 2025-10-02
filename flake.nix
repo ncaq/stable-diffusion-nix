@@ -299,11 +299,23 @@
             ]
           );
 
-          stable-diffusion-stability-ai = pkgs.fetchFromGitHub {
-            owner = "Stability-AI";
-            repo = "stablediffusion";
-            rev = "cf1d67a6fd5ea1aa600c4df58e5b47da45f6bdbf";
-            sha256 = "sha256-yEtrz/JTq53JDI4NZI26KsD8LAgiViwiNaB2i1CBs/I=";
+          stable-diffusion-stability-ai = pkgs.stdenv.mkDerivation {
+            pname = "stable-diffusion-stability-ai";
+            version = "unstable-2022-11-23";
+            src = pkgs.fetchFromGitHub {
+              owner = "Stability-AI";
+              repo = "stablediffusion";
+              rev = "cf1d67a6fd5ea1aa600c4df58e5b47da45f6bdbf";
+              sha256 = "sha256-yEtrz/JTq53JDI4NZI26KsD8LAgiViwiNaB2i1CBs/I=";
+            };
+            patches = [
+              ./patch/01-pytorch-lightning-import-fix-repo.patch
+            ];
+            patchFlags = [ "-p0" ];
+            installPhase = ''
+              mkdir -p $out
+              cp -r . $out/
+            '';
           };
 
           stable-diffusion-webui-assets = pkgs.fetchFromGitHub {
@@ -360,8 +372,6 @@
               cp -r ${stable-diffusion-stability-ai} repositories/stable-diffusion-stability-ai
               cp -r ${stable-diffusion-webui-assets} repositories/stable-diffusion-webui-assets
               chmod -R u+w repositories
-              # Apply pytorch-lightning patch to the repository
-              patch -p0 -d repositories/stable-diffusion-stability-ai < ${./patch/01-pytorch-lightning-import-fix-repo.patch}
               cd -
             '';
             installPhase = ''
