@@ -439,15 +439,12 @@
               mkdir -p $out/bin
               cat > $out/bin/stable-diffusion-webui << EOF
               #!/usr/bin/env bash
-              # Use XDG Base Directory specification
-              DATA_DIR=${./data}
-              # Create base directory
-              mkdir -p "\$DATA_DIR"
+              set -euo pipefail
               cd $out/share/stable-diffusion-webui
               export PYTHONPATH=$out/share/stable-diffusion-webui:$out/share/stable-diffusion-webui/modules
               export GRADIO_ANALYTICS_ENABLED=False
               exec ${pythonEnv}/bin/python webui.py \
-                --data-dir "\$DATA_DIR" \
+                --data-dir "\$HOME/Desktop/stable-diffusion-nix/data" \
                 "\$@"
               EOF
               chmod +x $out/bin/stable-diffusion-webui
