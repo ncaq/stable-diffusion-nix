@@ -1,6 +1,9 @@
 # Nix
 
 .direnv/
+
+/data
+!/data/.keep
 /result*
 
 .env*local

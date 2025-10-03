@@ -440,7 +440,7 @@
               cat > $out/bin/stable-diffusion-webui << EOF
               #!/usr/bin/env bash
               # Use XDG Base Directory specification
-              DATA_DIR="\''${XDG_DATA_HOME:-\$HOME/.local/share}/stable-diffusion-webui"
+              DATA_DIR=${./data}
               # Create base directory
               mkdir -p "\$DATA_DIR"
               cd $out/share/stable-diffusion-webui
