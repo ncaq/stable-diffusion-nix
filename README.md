@@ -24,6 +24,8 @@ NVIDIAのGPUを使用していること。
 今のところは後回しにしています。
 備考までに現在の私の実験環境はNVIDIA GeForce RTX 5090です。
 
+このリポジトリを`~/Desktop/stable-diffusion-nix`に`git clone`していること。
+
 ## 使い方
 
 ### 起動
