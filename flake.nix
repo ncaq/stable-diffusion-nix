@@ -172,6 +172,38 @@
                   ];
                 };
 
+                # pin version.
+                open-clip-torch = pyFinal.buildPythonPackage rec {
+                  pname = "open-clip-torch";
+                  version = "2.20.0";
+                  src = pkgs.fetchFromGitHub {
+                    owner = "mlfoundations";
+                    repo = "open_clip";
+                    tag = "v${version}";
+                    hash = "sha256-Ca4oi2LqleIFAGBJB7YIi4nXe2XhOP6ErDFXgXtJLxM=";
+                  };
+                  nativeCheckInputs = with pyFinal; [
+                    braceexpand
+                    pandas
+                    pytestCheckHook
+                    transformers
+                    webdataset
+                  ];
+                  propagatedBuildInputs = with pyFinal; [
+                    ftfy
+                    huggingface-hub
+                    protobuf
+                    regex
+                    safetensors
+                    sentencepiece
+                    timm
+                    torch
+                    torchvision
+                    tqdm
+                  ];
+                  doCheck = false;
+                };
+
                 pillow-avif-plugin = pyFinal.buildPythonPackage rec {
                   pname = "pillow-avif-plugin";
                   version = "1.5.2";
