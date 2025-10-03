@@ -303,6 +303,7 @@
               fastapi
               gitpython
               gradio
+              hf-xet
               httpcore
               httpx
               inflection
