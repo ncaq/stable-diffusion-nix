@@ -447,9 +447,6 @@
               export PYTHONPATH=$out/share/stable-diffusion-webui:$out/share/stable-diffusion-webui/modules
               export GRADIO_ANALYTICS_ENABLED=False
               exec ${pythonEnv}/bin/python webui.py \
-                --skip-python-version-check \
-                --skip-install \
-                --skip-torch-cuda-test \
                 --data-dir "\$DATA_DIR" \
                 "\$@"
               EOF
