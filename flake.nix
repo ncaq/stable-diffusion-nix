@@ -470,7 +470,7 @@
           };
           packages.default = stable-diffusion-webui;
           devShells.default = pkgs.mkShell {
-            buildInputs = [ pythonEnv ];
+            buildInputs = [ pkgs.python312 ];
           };
         };
     };
