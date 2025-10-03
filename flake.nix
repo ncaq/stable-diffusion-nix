@@ -35,7 +35,7 @@
         let
           pythonOverlay = _final: prev: {
             python312 = prev.python312.override {
-              packageOverrides = pyFinal: _pyPrev: {
+              packageOverrides = pyFinal: pyPrev: {
                 blendmodes = pyFinal.buildPythonPackage rec {
                   pname = "blendmodes";
                   version = "2022";
@@ -68,6 +68,32 @@
                     tqdm
                   ];
                 };
+
+                # Override FastAPI to avoid pydantic v2.
+                fastapi = pyPrev.fastapi.overridePythonAttrs (_old: {
+                  dependencies = with pyFinal; [
+                    pydantic_1
+                    starlette
+                    typing-extensions
+                  ];
+                  nativeCheckInputs =
+                    with pyFinal;
+                    [
+                      anyio
+                      dirty-equals
+                      flask
+                      inline-snapshot
+                      passlib
+                      pyjwt
+                      pytest-asyncio
+                      pytestCheckHook
+                      sqlalchemy
+                      trio
+                    ]
+                    ++ anyio.optional-dependencies.trio
+                    ++ passlib.optional-dependencies.bcrypt;
+                  doCheck = false;
+                });
 
                 facexlib = pyFinal.buildPythonPackage rec {
                   pname = "facexlib";
@@ -135,7 +161,7 @@
                     packaging
                     pandas
                     pillow
-                    pydantic
+                    pydantic_1
                     pydub
                     python-multipart
                     pyyaml
@@ -379,7 +405,6 @@
 
             # Apply patches for main source
             patches = [
-              ./patch/02-pydantic-v2-compatibility.patch
               ./patch/03-config-states-writable-dir.patch
             ];
             patchFlags = [
