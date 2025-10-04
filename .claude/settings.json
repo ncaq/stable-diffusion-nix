@@ -1,0 +1,6 @@
+{
+  "permissions": {
+    "allow": ["Bash(nix run)", "Read(/nix/store/**)"],
+    "additionalDirectories": ["../Desktop/nixpkgs/", "../Desktop/stable-diffusion-webui"]
+  }
+}
