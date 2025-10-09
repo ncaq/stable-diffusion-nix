@@ -30,6 +30,7 @@
       perSystem =
         {
           system,
+          config,
           ...
         }:
         let
@@ -463,6 +464,7 @@
             };
           };
           packages.default = stable-diffusion-webui;
+          checks = config.packages;
           devShells.default = pkgs.mkShell {
             buildInputs = [ pkgs.python312 ];
           };
