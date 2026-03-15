@@ -14,25 +14,13 @@
     };
   };
 
-  outputs =
-    inputs@{
-      flake-parts,
-      treefmt-nix,
-      ...
-    }:
+  outputs = inputs@{ flake-parts, treefmt-nix, ... }:
     flake-parts.lib.mkFlake { inherit inputs; } {
-      imports = [
-        treefmt-nix.flakeModule
-      ];
+      imports = [ treefmt-nix.flakeModule ];
 
       systems = [ "x86_64-linux" ];
 
-      perSystem =
-        {
-          system,
-          config,
-          ...
-        }:
+      perSystem = { system, config, ... }:
         let
           pythonOverlay = _final: prev: {
             python312 = prev.python312.override {
@@ -42,12 +30,10 @@
                   version = "2022";
                   src = pyFinal.fetchPypi {
                     inherit pname version;
-                    sha256 = "sha256-k2jxwekOhzS0lo8MrANpbg5acU/VfnS8bu/SXAQY/QM=";
+                    sha256 =
+                      "sha256-k2jxwekOhzS0lo8MrANpbg5acU/VfnS8bu/SXAQY/QM=";
                   };
-                  propagatedBuildInputs = with pyFinal; [
-                    numpy
-                    aenum
-                  ];
+                  propagatedBuildInputs = with pyFinal; [ numpy aenum ];
                 };
 
                 clip = pyFinal.buildPythonPackage {
@@ -57,7 +43,8 @@
                     owner = "openai";
                     repo = "CLIP";
                     rev = "a1d071733d7111c9c014f024669f959182114e33";
-                    sha256 = "sha256-NOiKadc5DYvE94NEHPvlUn4e8lvW2k0NkyEACAxekGQ=";
+                    sha256 =
+                      "sha256-NOiKadc5DYvE94NEHPvlUn4e8lvW2k0NkyEACAxekGQ=";
                   };
                   propagatedBuildInputs = with pyFinal; [
                     torch
@@ -77,8 +64,7 @@
                     starlette
                     typing-extensions
                   ];
-                  nativeCheckInputs =
-                    with pyFinal;
+                  nativeCheckInputs = with pyFinal;
                     [
                       anyio
                       dirty-equals
@@ -90,8 +76,7 @@
                       pytestCheckHook
                       sqlalchemy
                       trio
-                    ]
-                    ++ anyio.optional-dependencies.trio
+                    ] ++ anyio.optional-dependencies.trio
                     ++ passlib.optional-dependencies.bcrypt;
                   doCheck = false;
                 });
@@ -101,15 +86,14 @@
                   version = "0.3.0";
                   src = pyFinal.fetchPypi {
                     inherit pname version;
-                    sha256 = "sha256-eueEpSDrUuBVg+i/n2j3f0UIMjmsdU1kbWNQF7Sed2M=";
+                    sha256 =
+                      "sha256-eueEpSDrUuBVg+i/n2j3f0UIMjmsdU1kbWNQF7Sed2M=";
                   };
                   postPatch = ''
                     substituteInPlace setup.py \
                       --replace "version=get_version()," "version='${version}',"
                   '';
-                  nativeBuildInputs = with pyFinal; [
-                    cython
-                  ];
+                  nativeBuildInputs = with pyFinal; [ cython ];
                   propagatedBuildInputs = with pyFinal; [
                     numpy
                     opencv4
@@ -130,7 +114,8 @@
                   format = "pyproject";
                   src = pyFinal.fetchPypi {
                     inherit pname version;
-                    sha256 = "sha256-lcYrUEGVq+M2PQFRZ86Eis3he3W4lKeaLeeMz8/YLLI=";
+                    sha256 =
+                      "sha256-lcYrUEGVq+M2PQFRZ86Eis3he3W4lKeaLeeMz8/YLLI=";
                   };
                   nativeBuildInputs = with pyFinal; [
                     hatchling
@@ -138,12 +123,8 @@
                     hatch-fancy-pypi-readme
                     pythonRelaxDepsHook
                   ];
-                  pythonRelaxDeps = [
-                    "aiofiles"
-                    "markupsafe"
-                    "numpy"
-                    "pillow"
-                  ];
+                  pythonRelaxDeps =
+                    [ "aiofiles" "markupsafe" "numpy" "pillow" ];
                   propagatedBuildInputs = with pyFinal; [
                     importlib-resources
                     aiofiles
@@ -182,7 +163,8 @@
                   src = pyFinal.fetchPypi {
                     pname = "gradio_client";
                     inherit version;
-                    sha256 = "sha256-cJ6RweBzir5GrZ9FZdSQ7zaw8XzjRwUAF6+qRp7Xmmo=";
+                    sha256 =
+                      "sha256-cJ6RweBzir5GrZ9FZdSQ7zaw8XzjRwUAF6+qRp7Xmmo=";
                   };
                   nativeBuildInputs = with pyFinal; [
                     hatchling
@@ -207,7 +189,8 @@
                     owner = "mlfoundations";
                     repo = "open_clip";
                     tag = "v${version}";
-                    hash = "sha256-Ca4oi2LqleIFAGBJB7YIi4nXe2XhOP6ErDFXgXtJLxM=";
+                    hash =
+                      "sha256-Ca4oi2LqleIFAGBJB7YIi4nXe2XhOP6ErDFXgXtJLxM=";
                   };
                   nativeCheckInputs = with pyFinal; [
                     braceexpand
@@ -237,7 +220,8 @@
                   src = pyFinal.fetchPypi {
                     pname = "pillow_avif_plugin";
                     inherit version;
-                    sha256 = "sha256-gR4NyL4eRDk9Ljhl7DMKiooRlLlOuM/Kb6d44/R21kk=";
+                    sha256 =
+                      "sha256-gR4NyL4eRDk9Ljhl7DMKiooRlLlOuM/Kb6d44/R21kk=";
                   };
                   propagatedBuildInputs = with pyFinal; [ pillow ];
                   buildInputs = with prev; [ libavif ];
@@ -248,13 +232,11 @@
                   version = "0.4.0";
                   src = pyFinal.fetchPypi {
                     inherit pname version;
-                    sha256 = "sha256-9FUmiT+SOhLvN1QsROREsSCJdlk7x8zfpU/QTHw+gMo=";
+                    sha256 =
+                      "sha256-9FUmiT+SOhLvN1QsROREsSCJdlk7x8zfpU/QTHw+gMo=";
                   };
                   format = "pyproject";
-                  nativeBuildInputs = with pyFinal; [
-                    setuptools
-                    wheel
-                  ];
+                  nativeBuildInputs = with pyFinal; [ setuptools wheel ];
                   propagatedBuildInputs = with pyFinal; [
                     torch
                     torchvision
@@ -269,16 +251,12 @@
                   version = "0.2.0";
                   src = pyFinal.fetchPypi {
                     inherit pname version;
-                    sha256 = "sha256-khaHfsq8nJfgAa1dScT40rH2xvgtHnfI4rNQxYa25ko=";
+                    sha256 =
+                      "sha256-khaHfsq8nJfgAa1dScT40rH2xvgtHnfI4rNQxYa25ko=";
                   };
                   format = "pyproject";
-                  nativeBuildInputs = with pyFinal; [
-                    setuptools
-                    wheel
-                  ];
-                  propagatedBuildInputs = with pyFinal; [
-                    spandrel
-                  ];
+                  nativeBuildInputs = with pyFinal; [ setuptools wheel ];
+                  propagatedBuildInputs = with pyFinal; [ spandrel ];
                 };
 
                 tomesd = pyFinal.buildPythonPackage rec {
@@ -286,7 +264,8 @@
                   version = "0.1.3";
                   src = pyFinal.fetchPypi {
                     inherit pname version;
-                    sha256 = "sha256-Fbui6VL0ZDyDVZUeiS/akY3cy9/yI43DaNQr0Hj87ck=";
+                    sha256 =
+                      "sha256-Fbui6VL0ZDyDVZUeiS/akY3cy9/yI43DaNQr0Hj87ck=";
                   };
                   propagatedBuildInputs = with pyFinal; [ torch ];
                 };
@@ -298,12 +277,10 @@
                   format = "pyproject";
                   src = pyFinal.fetchPypi {
                     inherit pname version;
-                    sha256 = "sha256-iPxR2aJrEPwzG+NE8XgSJKN1t4SI/DQ2IBhOlaSycBY=";
+                    sha256 =
+                      "sha256-iPxR2aJrEPwzG+NE8XgSJKN1t4SI/DQ2IBhOlaSycBY=";
                   };
-                  nativeBuildInputs = with pyFinal; [
-                    setuptools
-                    wheel
-                  ];
+                  nativeBuildInputs = with pyFinal; [ setuptools wheel ];
                 };
               };
             };
@@ -318,8 +295,8 @@
             overlays = [ pythonOverlay ];
           };
 
-          pythonEnv = pkgs.python312.withPackages (
-            ps: with ps; [
+          pythonEnv = pkgs.python312.withPackages (ps:
+            with ps; [
               accelerate
               blendmodes
               clean-fid
@@ -356,8 +333,7 @@
               torchdiffeq
               torchsde
               transformers
-            ]
-          );
+            ]);
 
           stable-diffusion-stability-ai = pkgs.stdenv.mkDerivation {
             pname = "stable-diffusion-stability-ai";
@@ -368,9 +344,7 @@
               rev = "cf1d67a6fd5ea1aa600c4df58e5b47da45f6bdbf";
               sha256 = "sha256-yEtrz/JTq53JDI4NZI26KsD8LAgiViwiNaB2i1CBs/I=";
             };
-            patches = [
-              ./patch/01-pytorch-lightning-import-fix-repo.patch
-            ];
+            patches = [ ./patch/01-pytorch-lightning-import-fix-repo.patch ];
             patchFlags = [ "-p0" ];
             installPhase = ''
               mkdir -p $out
@@ -405,9 +379,7 @@
             src = inputs.stable-diffusion-webui;
 
             # Apply patches for main source
-            patches = [
-              ./patch/03-config-states-writable-dir.patch
-            ];
+            patches = [ ./patch/03-config-states-writable-dir.patch ];
             patchFlags = [
               "-p0"
               "--binary" # CRLFファイルが存在するのでバイナリ扱いします。
@@ -451,8 +423,7 @@
               chmod +x $out/bin/stable-diffusion-webui
             '';
           };
-        in
-        {
+        in {
           treefmt.config = {
             projectRootFile = "flake.nix";
             programs = {
@@ -465,9 +436,8 @@
           };
           packages.default = stable-diffusion-webui;
           checks = config.packages;
-          devShells.default = pkgs.mkShell {
-            buildInputs = [ pkgs.python312 ];
-          };
+          devShells.default =
+            pkgs.mkShell { buildInputs = [ pkgs.python312 ]; };
         };
     };
 
