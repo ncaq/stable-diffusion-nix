@@ -339,7 +339,7 @@
             pname = "stable-diffusion-stability-ai";
             version = "unstable-2022-11-23";
             src = pkgs.fetchFromGitHub {
-              owner = "Stability-AI";
+              owner = "w-e-w";
               repo = "stablediffusion";
               rev = "cf1d67a6fd5ea1aa600c4df58e5b47da45f6bdbf";
               sha256 = "sha256-yEtrz/JTq53JDI4NZI26KsD8LAgiViwiNaB2i1CBs/I=";
