@@ -17,7 +17,6 @@ jobs:
       - uses: actions/checkout@v5
       - uses: ncaq/nix-composite-action@dc5ec3a596bed5cb62a417dd446ff955876b1f49 # v1.0.1
         with:
-          cachix-name: stable-diffusion-nix
           cachix-auth-token: ${{ secrets.CACHIX_AUTH_TOKEN }}
       - run: nix flake check
 
@@ -27,7 +26,6 @@ jobs:
       - uses: actions/checkout@v5
       - uses: ncaq/nix-composite-action@dc5ec3a596bed5cb62a417dd446ff955876b1f49 # v1.0.1
         with:
-          cachix-name: stable-diffusion-nix
           cachix-auth-token: ${{ secrets.CACHIX_AUTH_TOKEN }}
       - name: editorconfig-checker
         run: nix run 'nixpkgs#editorconfig-checker' -- -config .editorconfig-checker.json
